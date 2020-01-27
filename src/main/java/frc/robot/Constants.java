@@ -33,7 +33,6 @@ public final class Constants {
     public static final int SHOOTER_MOTOR_2 = 8;
     public static final int SHOOTER_MOTOR_3 = 9;
     // CONTROL PANEL MOTORS
-    public static final int LIFT_MOTOR = 10;
     public static final int SPIN_MOTOR = 11;
 
     // CLIMBING PISTONS
@@ -78,6 +77,8 @@ public final class Constants {
     public static final int DEPLOY_INTAKE = 3;
     public static final int RETRACT_INTAKE = 1;
 
+    // CONTROL PANEL
+    public static final int SPIN_BUTTON = 9;
 
     // === SPEED CONSTANTS === //
 

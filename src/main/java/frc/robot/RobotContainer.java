@@ -40,8 +40,7 @@ public class RobotContainer {
     deployIntakeButton = new JoystickButton(opController, DEPLOY_INTAKE),
             retractIntakeButton = new JoystickButton(opController, RETRACT_INTAKE),
     // CONTROL PANEL BUTTONS
-    controlSpinButton = new JoystickButton(opController, SPIN_MOTOR),
-            controlLiftButton = new JoystickButton(opController, LIFT_MOTOR);
+    controlSpinButton = new JoystickButton(opController, SPIN_BUTTON);
 
     // ROBOT CONTAINER
     public RobotContainer() {
@@ -64,10 +63,6 @@ public class RobotContainer {
         retractIntakeButton.whenPressed(robotCommands.finalRetractIntake);
 
         // CONTROL PANEL BUTTONS
-        controlSpinButton.whenHeld(robotCommands.controlSpin);
-        
-        controlLiftButton.cancelWhenPressed(Command.controlDrop);
-        controlLiftButton.whenPressed(Command.controlLift.withTimeout(3));
     }
 
 
