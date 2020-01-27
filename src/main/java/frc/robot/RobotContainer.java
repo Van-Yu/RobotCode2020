@@ -13,15 +13,13 @@ import static frc.robot.Constants.*;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.auto.CotrolLiftCommand;
+import frc.robot.commands.auto.ControlLiftCommand;
 import frc.robot.commands.auto.routines.TestAutoCommandGroup;
 import frc.robot.subsystems.*;
 
 public class RobotContainer {
 
     // IMPORTING STUFF AND STUFF
-
-    
 
     private final RobotCommands robotCommands = new RobotCommands();
 
@@ -65,22 +63,4 @@ public class RobotContainer {
 
         // CONTROL PANEL BUTTONS
     }
-
-
-    public Drivetrain getDrivetrain() {
-        return robotCommands.getDrivetrain();
-    }
-
-
-    /**
-     * Use this to pass the autonomous command to the main {@link Robot} class.
-     *
-     * @return the command to run in autonomous
-     */
-    public Command getAutonomousCommand() {
-        // An ExampleCommand will run in autonomous
-        return new TestAutoCommandGroup(getDrivetrain());
-
-    }
-
 }
