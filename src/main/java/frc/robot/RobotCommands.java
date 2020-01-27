@@ -113,7 +113,6 @@ public class RobotCommands{
     );
 
     // CONTROL PANEL COMMANDS
-
     public final StartEndCommand controlSpin = new StartEndCommand(
         () -> CONTROL.spinnerOn(),
         () -> CONTROL.spinnerOff(),
