@@ -39,8 +39,7 @@ public class RobotContainer {
     deployIntakeButton = new JoystickButton(opController, DEPLOY_INTAKE),
             retractIntakeButton = new JoystickButton(opController, RETRACT_INTAKE),
     // CONTROL PANEL BUTTONS
-    controlSpinButton = new JoystickButton(opController, SPIN_MOTOR),
-            controlLiftButton = new JoystickButton(opController, LIFT_MOTOR);
+    controlSpinButton = new JoystickButton(opController, SPIN_BUTTON);
 
     // ROBOT CONTAINER
     public RobotContainer() {
@@ -63,25 +62,5 @@ public class RobotContainer {
         retractIntakeButton.whenPressed(robotCommands.finalRetractIntake);
 
         // CONTROL PANEL BUTTONS
-        controlSpinButton.whenHeld(robotCommands.controlSpin);
-        controlLiftButton.whenPressed(new ControlLiftCommand(robotCommands.CONTROL_PANEL).withTimeout(3));
     }
-
-
-    public Drivetrain getDrivetrain() {
-        return robotCommands.DRIVETRAIN;
-    }
-
-
-    /**
-     * Use this to pass the autonomous command to the main {@link Robot} class.
-     *
-     * @return the command to run in autonomous
-     */
-    public Command getAutonomousCommand() {
-        // An ExampleCommand will run in autonomous
-        return new TestAutoCommandGroup(getDrivetrain());
-
-    }
-
 }
