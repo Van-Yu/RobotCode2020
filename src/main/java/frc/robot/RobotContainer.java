@@ -39,8 +39,8 @@ public class RobotContainer {
     deployIntakeButton = new JoystickButton(opController, DEPLOY_INTAKE),
             retractIntakeButton = new JoystickButton(opController, RETRACT_INTAKE),
     // CONTROL PANEL BUTTONS
-    controlSpinButton = new JoystickButton(opController, SPIN_MOTOR),
-            controlLiftButton = new JoystickButton(opController, LIFT_MOTOR);
+    controlSpinButton = new JoystickButton(opController, SPIN_BUTTON),
+            controlLiftButton = new JoystickButton(opController, LIFT_BUTTON);
 
     // ROBOT CONTAINER
     public RobotContainer() {
