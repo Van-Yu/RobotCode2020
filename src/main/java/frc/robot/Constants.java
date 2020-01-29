@@ -46,6 +46,9 @@ public final class Constants {
   // INTAKE PISTONS
   public static final int INTAKE_PISTON_1 = 4;
   public static final int INTAKE_PISTON_2 = 5;
+  // CONTROL PANEL PISTONS
+  public static final int CONTROL_PISTON_1 = 0;
+  public static final int CONTROL_PISTON_2 = 1;
 
   // ENCODERS
   public static final int LEFT_ENCODER_PORT = 0; // port 1 is reserved
@@ -80,9 +83,9 @@ public final class Constants {
   public static final int DEPLOY_INTAKE = 3;
   public static final int RETRACT_INTAKE = 1;
 
-  // CONTROL PANEL
-  public static final int SPIN_BUTTON = 9;
-  public static final int LIFT_BUTTON = 10;
+  // CONTROL PANEL 
+  public static final int CONTROL_SPIN_BUTTON = 8;
+  public static final int CONTROL_PISTON_BUTTON = 9;
 
 
   // === SPEED CONSTANTS === //

@@ -29,11 +29,11 @@ public class ControlLiftCommand extends CommandBase {
   @Override
   public void initialize() {
     if(LIFTER_VAR == 0){
-      control.lifterOnUp();
+      control.lifterPistonUp();
       LIFTER_VAR = 1;
     }
     else{
-      control.lifterOnDown();
+      control.lifterPistonDown();
       LIFTER_VAR = 0;
     }
   }
@@ -46,7 +46,7 @@ public class ControlLiftCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    control.lifterOff();
+    control.lifterPistonOff();
   }
 
   // Returns true when the command should end.

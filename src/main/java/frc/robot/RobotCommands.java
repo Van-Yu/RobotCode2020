@@ -104,13 +104,28 @@ public class RobotCommands{
         CLIMBER.pistonUpSupplier
     );
 
-    // CONTROL PANEL COMMANDS
+    // == CONTROL PANEL MOTOR COMMAND == //
     public final StartEndCommand controlSpin = new StartEndCommand(
         () -> CONTROL_PANEL.spinnerOn(),
         () -> CONTROL_PANEL.spinnerOff(),
-            CONTROL_PANEL
+        CONTROL_PANEL
+    ); 
+
+    // == CONTROL PANEL PISTON COMMAND == // ** NOT USED **
+    /*
+    public final StartEndCommand controlDeploy = new StartEndCommand(
+        () -> CONTROL_PANEL.lifterPistonUp(), 
+        () -> CONTROL_PANEL.lifterPistonOff(),
+        CONTROL_PANEL
     );
 
+    public final StartEndCommand controlRetract = new StartEndCommand(
+        () -> CONTROL_PANEL.lifterPistonDown(), 
+        () -> CONTROL_PANEL.lifterPistonOff(),
+        CONTROL_PANEL
+    );
+    */
+    
 }
         
 
