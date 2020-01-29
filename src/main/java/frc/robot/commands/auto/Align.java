@@ -24,7 +24,7 @@ public class Align extends SequentialCommandGroup {
   // knownD IS THE DISTANCE FROM THE SHOOTING GOAL TO WHERE WE WANT THE ROBOT TO SHOOT FROM IN INCHES
   // WE CAN ALSO HAVE height AND knownD BE PARAMETERS IN THE CONSTRUCTER IF YOU WANT!!!!!!!!!!!!!
 
-  public Align(Drivetrain train, M_I2C i2c) {
+  public Align(Drivetrain train, M_I2C i2c, double height, double knownD) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     super(
