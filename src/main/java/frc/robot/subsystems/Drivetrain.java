@@ -25,6 +25,10 @@ public class Drivetrain extends SubsystemBase {
 
   private SpeedControllerGroup left, right;
 
+  private double speedMode = 0.25;
+  private boolean isFast = false;
+
+
   public Drivetrain() {
     frontLeft = new VictorSP(FRONT_LEFT_DRIVE_MOTOR);
     backLeft = new VictorSP(BACK_LEFT_DRIVE_MOTOR);
@@ -35,6 +39,13 @@ public class Drivetrain extends SubsystemBase {
     right = new SpeedControllerGroup(frontRight, backRight);
   }
 
+  public void modeSwitch(){
+    if (!(isFast)) speedMode = 1;
+    else speedMode = 0.25;
+    
+    isFast = !(isFast);
+  }
+
   public void tankDrive(double leftSpeed, double rightSpeed){
     setLeftSpeed(-leftSpeed);
     setRightSpeed(rightSpeed);
@@ -43,15 +54,15 @@ public class Drivetrain extends SubsystemBase {
     x *= Math.abs(x);
     z *= Math.abs(z);
 
-    tankDrive(x-z, x+z);
+    tankDrive(x+z, x-z);
   }
 
   private void setLeftSpeed(double speed) {
-    left.set(speed);
+    left.set(-speed*speedMode);
   }
 
   private void setRightSpeed(double speed) {
-    right.set(speed);
+    right.set(-speed*speedMode);
   }
 
   @Override

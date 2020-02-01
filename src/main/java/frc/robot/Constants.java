@@ -17,6 +17,10 @@ package frc.robot;
  */
 public final class Constants {
 
+
+  // == BUTTONS == //
+  public static final int MODE_SWITCH_BUTTON = 2;
+
   // === ROBOT PORTS === //
 
   // DRIVE MOTORS
@@ -30,8 +34,8 @@ public final class Constants {
   // STICKS
   public static final int HORIZ_AXIS_LEFT = 0;
   public static final int FORWARD_AXIS_LEFT = 1;
-  public static final int FORWARD_AXIS_RIGHT = 2;
-  public static final int HORIZ_AXIS_RIGHT = 3;
+  public static final int FORWARD_AXIS_RIGHT = 5;
+  public static final int HORIZ_AXIS_RIGHT = 4;
 
   // CONTROLLERS
   public static final int DRIVER_CONTROLLER = 0;
