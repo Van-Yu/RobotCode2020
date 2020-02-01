@@ -9,8 +9,6 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj2.command.*;
-import frc.robot.commands.auto.routines.TestAutoCommandGroup;
 import frc.robot.subsystems.*;
 
 import static frc.robot.Constants.*;
@@ -36,17 +34,4 @@ public class RobotContainer {
     public Drivetrain getDrivetrain() {
         return this.DRIVETRAIN;
     }
-
-    /**
-     * Use this to pass the autonomous command to the main {@link Robot} class.
-     *
-     * @return the command to run in autonomous
-     */
-
-    public Command getAutonomousCommand() {
-        // An ExampleCommand will run in autonomous
-        return new TestAutoCommandGroup(DRIVETRAIN);
-
-    }
-
 }
