@@ -21,7 +21,6 @@ import frc.robot.subsystems.*;
 public class RobotContainer {
 
     // IMPORTING STUFF AND STUFF
-
     private final RobotCommands robotCommands = new RobotCommands();
 
     // == JOYSTICK & BUTTON BINDINGS == //
@@ -31,19 +30,26 @@ public class RobotContainer {
     public final Joystick driverController = new Joystick(DRIVER_CONTROLLER), opController = new Joystick(OPERATOR_CONTROLLER);
 
     // CONFIG BUTTON BINDINGS (See constants.java to change specific ports etc.)
-    // CLIMB BUTTONS
-    private final JoystickButton pistonUpOrDownButton = new JoystickButton(opController, RAISE_OR_LOWER_CLIMB_PISTONS),
-                                 climbButton = new JoystickButton(opController, CLIMB_OR_LOWER),
+    // CLIMBER BUTTONS
+    private final JoystickButton raiseUpButton = new JoystickButton(opController, RAISE_LIFTER),
+                                 lowerDownButton = new JoystickButton(opController, LOWER_LIFTER),
+                                 gearClimbButton = new JoystickButton(opController, GEAR_BUTTON),
+
                                 // SHOOT BUTTON (TOGGLEABLE)
                                  flywheelToggleButton = new JoystickButton(opController, SHOOTER_WHEEL_TOGGLE),
-                                // PISTON-Y INTAKE BUTTONS
-                                 deployIntakeButton = new JoystickButton(opController, DEPLOY_INTAKE),
-                                 retractIntakeButton = new JoystickButton(opController, RETRACT_INTAKE),
+
+                                // INTAKE BUTTONS
+                                 deployOrRetractIntakeButton = new JoystickButton(opController, DEPLOY_RETRACT_INTAKE),
+                                 onOrOffIntakeButton = new JoystickButton(opController, ON_OR_OFF_INTAKE),
+
                                  // CONTROL PANEL BUTTONS
                                  controlSpinButton = new JoystickButton(opController, SPIN_CONTROL),
                                  controlLiftButton = new JoystickButton(opController, LIFT_CONTROL),
+                                 controlMatchButton = new JoystickButton(opController, MATCH_CONTROL),
+
                                  // STORAGE GATE BUTTON
                                  storageGateButton = new JoystickButton(opController, STORAGE_MOTOR);
+                                 
 
    
    
@@ -53,34 +59,37 @@ public class RobotContainer {
         configureButtonActions();
     }
 
-
     // CONFIG BUTTON ACTIONS
     private void configureButtonActions() {
 
         // CLIMB BUTTONS
-        climbButton.whenPressed(robotCommands.climbOrLower);
-        pistonUpOrDownButton.whenPressed(robotCommands.pistonUpOrDown);
+        raiseUpButton.whenHeld(robotCommands.raiseLifter);
+        lowerDownButton.whenHeld(robotCommands.lowerLifter);
+        gearClimbButton.whenHeld(robotCommands.gearClimb);
 
         // SHOOT BUTTONS
         flywheelToggleButton.toggleWhenPressed(robotCommands.shootAtSpeed);
 
-        // PISTON-Y INTAKE BUTTONS
-        deployIntakeButton.whileHeld(robotCommands.finalDeployPiston);
-        retractIntakeButton.whenPressed(robotCommands.finalRetractIntake);
+        // INTAKE BUTTONS
+        deployOrRetractIntakeButton.whenPressed(robotCommands.deployOrRetractIntake);
+        onOrOffIntakeButton.toggleWhenPressed(robotCommands.intakeOn);
 
         // CONTROL PANEL BUTTONS
-        controlSpinButton.whenHeld(robotCommands.controlSpin);
+
+        // TODO: make controlSpin button and controlMatch button the same thing based on game data
+        controlSpinButton.whenHeld(robotCommands.spinSetTimes);
+        controlMatchButton.whenHeld(robotCommands.controlSpinIfNoMatch);
         controlLiftButton.whenPressed(robotCommands.liftControlMaybe);
 
         // STORAGE
         storageGateButton.whenHeld(robotCommands.storageGate);
     }
 
-
+    
+    // GET DRIVETRAIN
     public Drivetrain getDrivetrain() {
         return robotCommands.DRIVETRAIN;
     }
-
 
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -89,7 +98,5 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         return new Auto2(robotCommands, getDrivetrain());
-
     }
-
 }

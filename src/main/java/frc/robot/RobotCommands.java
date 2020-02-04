@@ -25,32 +25,12 @@ public class RobotCommands{
     public final ControlPanel CONTROL_PANEL = new ControlPanel();
     public final Drivetrain DRIVETRAIN = new Drivetrain();
     public final Storage STORAGE = new Storage();
+    public final ColorSensor COLOR_SENSOR = new ColorSensor();
+
 
     // == COMMANDS == //
 
-    // BASE CLIMBER COMMANDS
-    public final StartEndCommand climbCommand = new StartEndCommand(
-        () -> CLIMBER.reversePrimary(), 
-        () -> CLIMBER.stopPrimary(), 
-        CLIMBER
-    );
-    public final StartEndCommand raisePrimaryCommand = new StartEndCommand(
-        () -> CLIMBER.raisePrimary(), 
-        () -> CLIMBER.stopPrimary(), 
-        CLIMBER
-    );
-    public final StartEndCommand raiseSecondaryCommand = new StartEndCommand(
-        () -> CLIMBER.raiseSecondary(), 
-        () -> CLIMBER.stopSecondary(), 
-        CLIMBER
-    );
-    public final StartEndCommand reverseSecondaryCommand = new StartEndCommand(
-        () -> CLIMBER.reverseSecondary(), 
-        () -> CLIMBER.stopSecondary(), 
-        CLIMBER
-    );
-
-
+    // BASE COMMANDS
  
     // SHOOTER COMMANDS
     // TODO: change set speed parameter to variable if vision processing works.
@@ -60,10 +40,10 @@ public class RobotCommands{
         SHOOTER
     );
 
-
     // INTAKE COMMANDS
-    public final InstantCommand intakeOn = new InstantCommand(
+    public final StartEndCommand intakeOn = new StartEndCommand(
         () -> INTAKE.wheelSpeed(WHEEL_INTAKE_SPEED), 
+        () -> INTAKE.wheelSpeed(0),
         INTAKE
     );
     public final InstantCommand intakeOff = new InstantCommand(
@@ -71,83 +51,109 @@ public class RobotCommands{
         INTAKE
     );
     public final StartEndCommand pistonDeploy = new StartEndCommand(
-        () -> INTAKE.deploy(), () -> INTAKE.stop(), 
+        () -> INTAKE.deploy(), () -> INTAKE.stopPistons(), 
         INTAKE
     );
     public final StartEndCommand pistonRetract = new StartEndCommand(
-        () -> INTAKE.retract(), () -> INTAKE.stop(), 
+        () -> INTAKE.retract(), () -> INTAKE.stopPistons(), 
         INTAKE
     );
 
     // CONTROL PANEL COMMANDS
-
     public final StartEndCommand controlLift = new StartEndCommand(
         () -> CONTROL_PANEL.lifterOnUp(),
         () -> CONTROL_PANEL.lifterOff(),
         CONTROL_PANEL
     );
-
     public final StartEndCommand controlDrop = new StartEndCommand(
         () -> CONTROL_PANEL.lifterOnDown(),
         () -> CONTROL_PANEL.lifterOff(),
         CONTROL_PANEL
     );
-
     public final StartEndCommand controlSpin = new StartEndCommand(
         () -> CONTROL_PANEL.spinnerOn(),
         () -> CONTROL_PANEL.spinnerOff(),
         CONTROL_PANEL
     );
 
+    public final InstantCommand controlStop = new InstantCommand(
+        () -> CONTROL_PANEL.spinnerOff(),
+        CONTROL_PANEL
+    );
 
+    // CLIMBER COMMANDS
+    public final StartEndCommand raiseLifter = new StartEndCommand(
+        () -> CLIMBER.setLifterSpeed(0.75),
+        () -> CLIMBER.setLifterSpeed(0),
+        CLIMBER
+    );
+    
+    public final StartEndCommand lowerLifter = new StartEndCommand(
+        () -> CLIMBER.setLifterSpeed(-0.75),
+        () -> CLIMBER.setLifterSpeed(0),
+        CLIMBER
+    );
 
+    public final StartEndCommand gearClimb = new StartEndCommand(
+        () -> CLIMBER.setGearSpeed(0.75),
+        () -> CLIMBER.setGearSpeed(0),
+        CLIMBER
+    );
+    
+    
     // STORAGE COMMANDS
-
     public final StartEndCommand storageGate = new StartEndCommand(
         () -> STORAGE.gateSpeed(),
         () -> STORAGE.gateZero(),
         STORAGE
     );
 
-
+    // SECOND LEVEL COMMANDS
 
     // SECOND LEVEL INTAKE COMMANDS
     public final ConditionalCommand finalDeployPiston = new ConditionalCommand(
         intakeOn, pistonDeploy.andThen(intakeOn), INTAKE.isDeployedSupplier
     );
-
     public final SequentialCommandGroup finalRetractIntake = new SequentialCommandGroup(
         intakeOff,
         pistonRetract.withTimeout(1)
         //TODO - timeout times again
     );
-
-
-    // SECOND LEVEL CLIMBER COMMANDS
-
-    // TODO - check timeout times - I kind of made them up
-    public final ConditionalCommand climbOrLower = new ConditionalCommand(
-        raisePrimaryCommand.withTimeout(6), climbCommand.withTimeout(6).andThen(reverseSecondaryCommand.withTimeout(3)), 
-        CLIMBER.hasClimbedBooleanSupplier
+    public final ConditionalCommand deployOrRetractIntake = new ConditionalCommand(
+        finalRetractIntake, finalDeployPiston, INTAKE.isDeployedSupplier
     );
-    public final ConditionalCommand pistonUpOrDown = new ConditionalCommand(
-        reverseSecondaryCommand.withTimeout(2), 
-        raiseSecondaryCommand.withTimeout(2), 
-        CLIMBER.pistonUpSupplier
+
+    public final ConditionalCommand onOrOffIntake = new ConditionalCommand(
+        intakeOff, intakeOn, INTAKE.isOnSupplier
     );
 
     // SECOND LEVEL CONTROL COMMANDS
-
     public final ConditionalCommand liftControlMaybe = new ConditionalCommand(
         controlLift.withTimeout(3), controlDrop.withTimeout(3).andThen(), 
         CONTROL_PANEL.controlUpSupplier
     );
+
+    // COLOR SENSOR (CONTROL PANEL) SECOND LEVEL COMMANDS
+    public final ConditionalCommand controlSpinIfNoMatch = new ConditionalCommand(
+        controlStop,
+        controlSpin,
+        COLOR_SENSOR.colorMatchSupplier
+    );
+
+    public final ConditionalCommand spinSetTimes = new ConditionalCommand(
+        controlSpin,
+        controlStop,
+        COLOR_SENSOR.keepSpinningSupplier
+    );
+
     
-    // DRIVETRAIN
+    
+    // MAKE A DRIVETRAIN
 
     public Drivetrain getDrivetrain() {
         return this.DRIVETRAIN;
     }
+
 
 
 }
